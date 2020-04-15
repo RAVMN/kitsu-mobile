@@ -10,6 +10,7 @@ import { Navigation } from 'react-native-navigation';
 import { PropTypes } from 'prop-types';
 import { Screens } from 'kitsu/navigation';
 import { styles } from './styles';
+import I18n from 'kitsu/translations/i18n';
 
 class TopsList extends PureComponent {
   static propTypes = {
@@ -61,9 +62,14 @@ class TopsList extends PureComponent {
         Summer: require('kitsu/assets/img/seasons/Summer.png'),
         Fall: require('kitsu/assets/img/seasons/Fall.png'),
       };
-
+      const title = {
+        Winter: (I18n.t("utils.seasons.winter")),
+        Spring: (I18n.t("utils.seasons.spring")),
+        Summer: (I18n.t("utils.seasons.summer")),
+        Fall: (I18n.t("utils.seasons.fall")),
+      };
       return {
-        title: `${season} ${year}`,
+        title: `${title[season]} ${year}`,
         image: images[season],
         onPress: () => showSeasonResults(this.props.componentId, season, year),
       };
@@ -81,7 +87,7 @@ class TopsList extends PureComponent {
       data.push(getData(seasons[i], curYear));
     }
 
-    // All all the seasons from previous years
+    // Add all the seasons from previous years
     for (let year = curYear - 1; year >= minYear; year -= 1) {
       seasons.forEach((season) => {
         data.push(getData(season, year));
@@ -94,35 +100,35 @@ class TopsList extends PureComponent {
   getAnimeCategories() {
     return [
       {
-        title: 'Action',
+        title: (I18n.t("utils.genres.action")),
         image: require('kitsu/assets/img/anime-categories/Action.png'),
       },
       {
-        title: 'Adventure',
+        title: (I18n.t("utils.genres.adventure")),
         image: require('kitsu/assets/img/anime-categories/Adventure.png'),
       },
       {
-        title: 'Comedy',
+        title: (I18n.t("utils.genres.comedy")),
         image: require('kitsu/assets/img/anime-categories/Comedy.png'),
       },
       {
-        title: 'Daily Life',
+        title: (I18n.t("utils.genres.dailylife")),
         image: require('kitsu/assets/img/anime-categories/DailyLife.png'),
       },
       {
-        title: 'Fantasy',
+        title: (I18n.t("utils.genres.fantasy")),
         image: require('kitsu/assets/img/anime-categories/Fantasy.png'),
       },
       {
-        title: 'Romance',
+        title: (I18n.t("utils.genres.romance")),
         image: require('kitsu/assets/img/anime-categories/Romance.png'),
       },
       {
-        title: 'Science Fiction',
+        title: (I18n.t("utils.genres.sciencefiction")),
         image: require('kitsu/assets/img/anime-categories/ScienceFiction.png'),
       },
       {
-        title: 'Sports',
+        title: (I18n.t("utils.genres.sports")),
         image: require('kitsu/assets/img/anime-categories/Sports.png'),
       },
     ];
@@ -131,35 +137,35 @@ class TopsList extends PureComponent {
   getMangaCategories() {
     return [
       {
-        title: 'Action',
+        title: (I18n.t("utils.genres.action")),
         image: require('kitsu/assets/img/manga-categories/Action.png'),
       },
       {
-        title: 'Adventure',
+        title: (I18n.t("utils.genres.adventure")),
         image: require('kitsu/assets/img/manga-categories/Adventure.png'),
       },
       {
-        title: 'Comedy',
+        title: (I18n.t("utils.genres.comedy")),
         image: require('kitsu/assets/img/manga-categories/Comedy.png'),
       },
       {
-        title: 'Daily Life',
+        title: (I18n.t("utils.genres.dailylife")),
         image: require('kitsu/assets/img/manga-categories/DailyLife.png'),
       },
       {
-        title: 'Fantasy',
+        title: (I18n.t("utils.genres.fantasy")),
         image: require('kitsu/assets/img/manga-categories/Fantasy.png'),
       },
       {
-        title: 'Romance',
+        title: (I18n.t("utils.genres.romance")),
         image: require('kitsu/assets/img/manga-categories/Romance.png'),
       },
       {
-        title: 'Science Fiction',
+        title: (I18n.t("utils.genres.sciencefiction")),
         image: require('kitsu/assets/img/manga-categories/ScienceFiction.png'),
       },
       {
-        title: 'Sports',
+        title: (I18n.t("utils.genres.sports")),
         image: require('kitsu/assets/img/manga-categories/Sports.png'),
       },
     ];
@@ -174,7 +180,7 @@ class TopsList extends PureComponent {
   getListData(type, data) {
     const seasons = this.getSeasonsData();
     const seasonsData = {
-      title: `${type} By Seasons`,
+      title: (I18n.t("screens.search.byseason", {type:type})),
       data: seasons,
       dark: true,
       type: 'static',
@@ -196,7 +202,7 @@ class TopsList extends PureComponent {
       }));
 
     const streamingData = {
-      title: `${type} By Streaming`,
+      title: (I18n.t("screens.search.bystreaming", {type:type})),
       dark: true,
       data: streamingServices,
       type: 'static',
@@ -213,7 +219,7 @@ class TopsList extends PureComponent {
     }));
 
     const categoryData = {
-      title: `${type} By Category`,
+      title: (I18n.t("screens.search.bycategory", {type:type})),
       data: mappedCategories,
       dark: true,
       type: 'static',
@@ -224,25 +230,25 @@ class TopsList extends PureComponent {
     const loadingData = Array(20).fill({});
 
     const topData = {
-      title: (type === 'Anime') ? `Top Airing ${type}` : `Top Publishing ${type}`,
+      title: (type === 'Anime') ?  (I18n.t("screens.search.topairing", {type:type})) : (I18n.t("screens.search.toppublishing", {type:type})),
       data: isEmpty(data.topAiring) ? loadingData : data.topAiring,
       type: isEmpty(data.topAiring) ? 'loading' : 'topAiring',
     };
 
     const upcomingData = {
-      title: `Top Upcoming ${type}`,
+      title: (I18n.t("screens.search.topupcoming", {type:type})),
       data: isEmpty(data.topUpcoming) ? loadingData : data.topUpcoming,
       type: isEmpty(data.topUpcoming) ? 'loading' : 'topUpcoming',
     };
 
     const highestRatedData = {
-      title: `Highest Rated ${type}`,
+      title:(I18n.t("screens.search.highestrated", {type:type})),
       data: isEmpty(data.highest) ? loadingData : data.highest,
       type: isEmpty(data.highest) ? 'loading' : 'highest',
     };
 
     const mostPopularData = {
-      title: `Most Popular ${type}`,
+      title: (I18n.t("screens.search.mostpopular", {type:type})),
       data: isEmpty(data.popular) ? loadingData : data.popular,
       type: isEmpty(data.popular) ? 'loading' : 'popular',
     };
@@ -273,7 +279,7 @@ class TopsList extends PureComponent {
         component: {
           name: Screens.SEARCH_SEASON,
           passProps: {
-            label: 'Seasons',
+            label: (I18n.t("screens.search.seasons")),
           },
         },
       });
