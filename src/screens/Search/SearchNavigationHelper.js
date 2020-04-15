@@ -1,6 +1,8 @@
 import { toLower, upperFirst, startCase } from 'lodash';
 import { Navigation } from 'react-native-navigation';
 import { Screens } from 'kitsu/navigation';
+import I18n from 'kitsu/translations/i18n';
+
 /**
  * Navigates to SearchResults with the given category and type filter.
  *
@@ -53,11 +55,16 @@ function showStreamerResults(componentId, streamer) {
  * @param {number} year The year.
  */
 function showSeasonResults(componentId, season, year) {
+  const title = {
+        Winter: (I18n.t("utils.seasons.winter")),
+        Spring: (I18n.t("utils.seasons.spring")),
+        Summer: (I18n.t("utils.seasons.summer")),
+        Fall: (I18n.t("utils.seasons.fall"))}
   Navigation.push(componentId, {
     component: {
       name: Screens.SEARCH_RESULTS,
       passProps: {
-        label: `${season} ${year}`,
+        label: `${title[season]} ${year}`,
         active: 'anime',
         filter: {
           season: toLower(season),
